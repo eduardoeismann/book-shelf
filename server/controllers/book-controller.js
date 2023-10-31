@@ -1,5 +1,6 @@
 const Book = require('../models/book-model')
 
+// [ISSUE 1: OK]
 createBook = (req, res) => {
     const body = req.body
 
@@ -33,6 +34,7 @@ createBook = (req, res) => {
         })
 }
 
+// [ISSUE 2: OPEN]
 updateBook = async (req, res) => {
     const body = req.body
 
@@ -70,6 +72,7 @@ updateBook = async (req, res) => {
     });
 }
 
+// [ISSUE 3: OPEN]
 deleteBook = async (req, res) => {
     await Book.findOneAndDelete({ _id: req.params.id }, (err, book) => {
         if (err) {
@@ -86,21 +89,20 @@ deleteBook = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+// [ISSUE 4: OK]
 getBookById = async (req, res) => {
-    await Book.findOne({ _id: req.params.id }, (err, book) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
+    const queryId = { _id: req.params.id };
 
-        if (!book) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Book not found` })
-        }
-        return res.status(200).json({ success: true, data: book })
-    }).catch(err => console.log(err))
+    const book = await Book.findOne(queryId);
+
+    if(book) {
+        return res.status(200).json({ success: true, data: book });
+    }
+
+    return res.status(404).json({ success: false, error: 'Book not found!' });
 }
 
+// [ISSUE 5: OPEN]
 getBooks = async (req, res) => {
     await Book.find({}, (err, books) => {
         if (err) {
