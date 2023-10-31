@@ -1,6 +1,5 @@
 const Book = require('../models/book-model')
 
-// [ISSUE 1: OK]
 createBook = (req, res) => {
     const body = req.body
 
@@ -72,24 +71,18 @@ updateBook = async (req, res) => {
     });
 }
 
-// [ISSUE 3: OPEN]
 deleteBook = async (req, res) => {
-    await Book.findOneAndDelete({ _id: req.params.id }, (err, book) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
+    const queryId = await Book.findOne({ _id: req.params.id });
 
-        if (!book) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Book not found` })
-        }
+    const book = await Book.deleteOne(queryId);
 
-        return res.status(200).json({ success: true, data: book })
-    }).catch(err => console.log(err))
+    if(book.acknowledged) {
+        return res.status(200).json({ success: true, data: book });
+    }
+
+    return res.status(404).json({ success: false, error: 'Book not found!' });
 }
 
-// [ISSUE 4: OK]
 getBookById = async (req, res) => {
     const queryId = { _id: req.params.id };
 
@@ -102,19 +95,17 @@ getBookById = async (req, res) => {
     return res.status(404).json({ success: false, error: 'Book not found!' });
 }
 
-// [ISSUE 5: OPEN]
 getBooks = async (req, res) => {
-    await Book.find({}, (err, books) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-        if (!books.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Book not found` })
-        }
-        return res.status(200).json({ success: true, data: books })
-    }).catch(err => console.log(err))
+    const books = await Book.find();
+
+    console.log('-- BOOKS --');
+    console.log(books);
+
+    if(books) {
+        return res.status(200).json({ success: true, data: books });
+    }
+
+    return res.status(404).json({ success: false, error: `Book not found` });
 }
 
 module.exports = {
