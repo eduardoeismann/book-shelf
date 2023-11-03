@@ -1,15 +1,55 @@
 import React, { Component } from 'react'
-// import ReactTable from 'react-table'
+import ReactTable from 'react-table'
 import api from '../api'
 
 import styled from 'styled-components'
 
-import ReactTable from 'react-table-6'
-import 'react-table-6/react-table.css'
+import 'react-table/react-table.css'
 
 const Wrapper = styled.div`
     padding: 0 40px 40px 40px;
 `
+
+const Update = styled.div`
+    color: #ef9b0f;
+    cursor: pointer;
+`
+
+const Delete = styled.div`
+    color: #ff0000;
+    cursor: pointer;
+`
+
+class UpdateBook extends Component {
+    updateUser = event => {
+        event.preventDefault()
+
+        window.location.href = `/books/update/${this.props.id}`
+    }
+
+    render() {
+        return <Update onClick={this.updateUser}>Update</Update>
+    }
+}
+
+class DeleteBook extends Component {
+    deleteUser = event => {
+        event.preventDefault()
+
+        if (
+            window.confirm(
+                `Do tou want to delete the book ${this.props.id} permanently?`,
+            )
+        ) {
+            api.deleteBookById(this.props.id)
+            window.location.reload()
+        }
+    }
+
+    render() {
+        return <Delete onClick={this.deleteUser}>Delete</Delete>
+    }
+}
 
 class BooksList extends Component {
     constructor(props) {
@@ -55,6 +95,28 @@ class BooksList extends Component {
             {
                 Header: 'Pages',
                 accessor: 'pages'
+            },
+            {
+                Header: '',
+                accessor: '',
+                Cell: function(props) {
+                    return (
+                        <span>
+                            <DeleteBook id={props.original._id} />
+                        </span>
+                    )
+                },
+            },
+            {
+                Header: '',
+                accessor: '',
+                Cell: function(props) {
+                    return (
+                        <span>
+                            <UpdateBook id={props.original._id} />
+                        </span>
+                    )
+                },
             },
         ]
 
