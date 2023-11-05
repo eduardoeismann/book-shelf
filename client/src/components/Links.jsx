@@ -36,7 +36,7 @@ class Links extends Component {
                     </List>
                 </Collapse>
             </React.Fragment>
-        )
+        );
     }
 }
 

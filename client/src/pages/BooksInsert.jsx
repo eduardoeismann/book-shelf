@@ -36,7 +36,7 @@ const CancelButton = styled.a.attrs({
 
 class BooksInsert extends Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = {
             title: '',
@@ -46,8 +46,8 @@ class BooksInsert extends Component {
     }
 
     handleChangeInputTitle = async event => {
-        const title = event.target.value
-        this.setState({ title })
+        const title = event.target.value;
+        this.setState({ title });
     }
 
     handleChangeInputSubtitle = async event => {
@@ -56,13 +56,13 @@ class BooksInsert extends Component {
     }
 
     handleChangeInputPages = async event => {
-        const pages = event.target.value
+        const pages = event.target.value;
         this.setState({ pages });
     }
 
     handleIncludeBook = async () => {
-        const { title, subtitle, pages } = this.state
-        const payload = { title, subtitle, pages }
+        const { title, subtitle, pages } = this.state;
+        const payload = { title, subtitle, pages };
 
         await api.insertBook(payload).then(res => {
             window.alert(`Book inserted successfully`);
@@ -71,12 +71,12 @@ class BooksInsert extends Component {
                 title: '',
                 subtitle: '',
                 pages: 0
-            })
-        })
+            });
+        });
     }
 
     render() {
-        const { title, subtitle, pages } = this.state
+        const { title, subtitle, pages } = this.state;
         return (
             <Wrapper>
                 <Title>Create Book</Title>

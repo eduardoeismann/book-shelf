@@ -20,59 +20,56 @@ const Delete = styled.div`
 
 class UpdateBook extends Component {
     updateUser = event => {
-        event.preventDefault()
+        event.preventDefault();
 
-        window.location.href = `/books/update/${this.props.id}`
+        window.location.href = `/books/update/${this.props.id}`;
     }
 
     render() {
-        return <Update onClick={this.updateUser}>Update</Update>
+        return <Update onClick={this.updateUser}>Update</Update>;
     }
 }
 
 class DeleteBook extends Component {
     deleteUser = event => {
-        event.preventDefault()
+        event.preventDefault();
 
-        if (
-            window.confirm(
-                `Do tou want to delete the book ${this.props.id} permanently?`,
-            )
-        ) {
-            api.deleteBookById(this.props.id)
-            window.location.reload()
+        if ( window.confirm( `Do tou want to delete the book ${this.props.id} permanently?` ) ) {
+            api.deleteBookById(this.props.id);
+            window.location.reload();
         }
     }
 
     render() {
-        return <Delete onClick={this.deleteUser}>Delete</Delete>
+        return <Delete onClick={this.deleteUser}>Delete</Delete>;
     }
 }
 
 class BooksList extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+
         this.state = {
             books: [],
             columns: [],
-            isLoading: false,
+            isLoading: false
         }
     }
 
     componentDidMount = async () => {
-        this.setState({ isLoading: true })
+        this.setState({ isLoading: true });
 
         await api.getAllBooks().then(books => {
             this.setState({
                 books: books.data.data,
-                isLoading: false,
-            })
-        })
+                isLoading: false
+            });
+        });
     }
 
     render() {
-        const { books, isLoading } = this.state
-        console.log('TCL: BooksList -> render -> books', books)
+        const { books, isLoading } = this.state;
+        console.log('TCL: BooksList -> render -> books', books);
 
         const columns = [
             {
@@ -102,7 +99,7 @@ class BooksList extends Component {
                         <span>
                             <DeleteBook id={props.original._id} />
                         </span>
-                    )
+                    );
                 },
             },
             {
@@ -113,14 +110,15 @@ class BooksList extends Component {
                         <span>
                             <UpdateBook id={props.original._id} />
                         </span>
-                    )
+                    );
                 },
             },
         ]
 
-        let showTable = true
+        let showTable = true;
+
         if (!books.length) {
-            showTable = false
+            showTable = false;
         }
 
         return (
@@ -136,7 +134,7 @@ class BooksList extends Component {
                     />
                 )}
             </Wrapper>
-        )
+        );
     }
 }
 

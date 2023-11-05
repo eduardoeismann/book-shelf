@@ -12,7 +12,7 @@ class Logo extends Component {
             <Wrapper href="https://sambarros.com">
                 <img src={logo} width="50" height="50" alt="sambarros.com" />
             </Wrapper>
-        )
+        );
     }
 }
 
