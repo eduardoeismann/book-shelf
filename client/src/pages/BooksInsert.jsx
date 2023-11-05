@@ -39,9 +39,9 @@ class BooksInsert extends Component {
         super(props)
 
         this.state = {
-            title: '', // name string
-            subtitle: '', // rating string
-            pages: 0 // time number
+            title: '',
+            subtitle: '',
+            pages: 0
         }
     }
 
@@ -51,25 +51,22 @@ class BooksInsert extends Component {
     }
 
     handleChangeInputSubtitle = async event => {
-        const subtitle = event.target.validity.valid
-            ? event.target.value
-            : this.state.subtitle
-
-        this.setState({ subtitle })
+        const subtitle = event.target.value;
+        this.setState({ subtitle });
     }
 
     handleChangeInputPages = async event => {
         const pages = event.target.value
-        this.setState({ pages })
+        this.setState({ pages });
     }
 
     handleIncludeBook = async () => {
         const { title, subtitle, pages } = this.state
-        const arrayPages = pages.split('/')
-        const payload = { title, subtitle, pages: arrayPages }
+        const payload = { title, subtitle, pages }
 
         await api.insertBook(payload).then(res => {
-            window.alert(`Book inserted successfully`)
+            window.alert(`Book inserted successfully`);
+
             this.setState({
                 title: '',
                 subtitle: '',
@@ -93,12 +90,12 @@ class BooksInsert extends Component {
 
                 <Label>Subtitle: </Label>
                 <InputText
-                    type="number"
+                    type="text"
                     value={subtitle}
                     onChange={this.handleChangeInputSubtitle}
                 />
 
-                <Label>Time: </Label>
+                <Label>Pages: </Label>
                 <InputText
                     type="number"
                     value={pages}

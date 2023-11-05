@@ -4,7 +4,7 @@ createBook = (req, res) => {
     const body = req.body
 
     if (!body) {
-        return res.status(400).json({
+        return res.status(402).json({
             success: false,
             error: 'You must provide a book',
         })
@@ -13,7 +13,7 @@ createBook = (req, res) => {
     const book = new Book(body)
 
     if (!book) {
-        return res.status(400).json({ success: false, error: err })
+        return res.status(401).json({ success: false, error: err })
     }
 
     book
@@ -26,7 +26,7 @@ createBook = (req, res) => {
             })
         })
         .catch(error => {
-            return res.status(400).json({
+            return res.status(403).json({
                 error,
                 message: 'Book not created!',
             })
