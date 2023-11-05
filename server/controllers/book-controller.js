@@ -1,36 +1,35 @@
 const Book = require('../models/book-model')
 
 createBook = (req, res) => {
-    const body = req.body
+    const body = req.body;
 
     if (!body) {
         return res.status(402).json({
             success: false,
-            error: 'You must provide a book',
-        })
+            error: 'You must provide a book'
+        });
     }
 
-    const book = new Book(body)
+    const book = new Book(body);
 
     if (!book) {
-        return res.status(401).json({ success: false, error: err })
+        return res.status(401).json({ success: false, error: err });
     }
 
-    book
-        .save()
+    book.save()
         .then(() => {
             return res.status(201).json({
                 success: true,
                 id: book._id,
-                message: 'Book created!',
-            })
+                message: 'Book created!'
+            });
         })
         .catch(error => {
             return res.status(403).json({
                 error,
-                message: 'Book not created!',
-            })
-        })
+                message: 'Book not created!'
+            });
+        });
 }
 
 updateBook = async (req, res) => {
