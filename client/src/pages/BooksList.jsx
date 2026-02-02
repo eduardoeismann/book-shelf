@@ -73,11 +73,6 @@ class BooksList extends Component {
 
         const columns = [
             {
-                Header: 'ID',
-                accessor: '_id',
-                filterable: true
-            },
-            {
                 Header: 'Title',
                 accessor: 'title',
                 filterable: true
@@ -92,23 +87,23 @@ class BooksList extends Component {
                 accessor: 'pages'
             },
             {
-                Header: '',
-                accessor: '',
-                Cell: function(props) {
-                    return (
-                        <span>
-                            <DeleteBook id={props.original._id} />
-                        </span>
-                    );
-                },
-            },
-            {
-                Header: '',
+                Header: 'Update',
                 accessor: '',
                 Cell: function(props) {
                     return (
                         <span>
                             <UpdateBook id={props.original._id} />
+                        </span>
+                    );
+                },
+            },
+            {
+                Header: 'Delete',
+                accessor: '',
+                Cell: function(props) {
+                    return (
+                        <span>
+                            <DeleteBook id={props.original._id} />
                         </span>
                     );
                 },
@@ -128,7 +123,7 @@ class BooksList extends Component {
                         data={books}
                         columns={columns}
                         loading={isLoading}
-                        defaultPageSize={10}
+                        defaultPageSize={12}
                         showPageSizeOptions={true}
                         minRows={0}
                     />
